@@ -6,16 +6,20 @@ import plusIcon from "@/assets/icons/plus.svg";
 import xIcon from "@/assets/icons/x.svg";
 import Image from 'next/image';
 import axios from 'axios';
+import Options from '../options/options';
+import Popup from '../popup/popup';
 
-export default function Task({task}) {
-    const url = "http://localhost:8080/items";
+export default function Task({task, getTasks}) {
+    const urlItem = "http://localhost:8080/items";
+    const urlTask = "http://localhost:8080/tasks";
 
+    const [deletePopup, setDeletePopup] = useState(false);
     const [items, setItems] = useState([]);
     const [isAddingItem, setIsAddingItem] = useState(false);
     const [form, setForm] = useState({});
 
     function getItems() {
-        axios.get(url+`/all?taskId=${task.id}`, {
+        axios.get(urlItem+`/all?taskId=${task.id}`, {
             headers: {
                 "Content-Type": "application/json",
             }
@@ -32,10 +36,30 @@ export default function Task({task}) {
         setForm({...form, [e.target.name]: e.target.value});
     }
 
+    function editTask() {
+        console.log("Edit task");
+    }
+
+    function deleteTask() {
+        console.log("Delete task id:", task.id);
+        axios.delete(urlTask+`/delete/${task.id}`, {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(() => {
+            console.log("Task deleted");
+            setDeletePopup(false);
+            getTasks(); // Chama getTasks após a conclusão bem-sucedida da requisição DELETE
+        }).catch(error => {
+            console.error("There was an error deleting the task:", error);
+            // Tratar erro aqui, se necessário
+        })
+    }
+
     function addItem(event) {  
         event.preventDefault();
         console.log(form);
-        axios.post(url+`/additem?taskId=${task.id}`, JSON.stringify({
+        axios.post(urlItem+`/additem?taskId=${task.id}`, JSON.stringify({
             description: form.description
         }), {
             headers: {
@@ -56,10 +80,31 @@ export default function Task({task}) {
 
     return (
         <div className={styles.card}>
-            <div>
+            {deletePopup && 
+                <Popup 
+                    title={`Deseja excluir a tarefa "${task.title}"?`} 
+                    setDeletePopup={setDeletePopup} 
+                    func={deleteTask}
+                />
+            }
+            <div className={styles.head}>
                 <h2>{task.title}</h2>
+                <Options 
+                    options={
+                        [
+                            {
+                                text: "Editar",
+                                onClick: editTask
+                            },
+                            {   
+                                text: "Excluir",
+                                onClick: () => setDeletePopup(true)
+                            }
+                        ]
+                    }
+                />
             </div>
-            <div>
+            <div className={styles.items}>
                 {items.map((item, index) => (
                     <Item key={item.id} item={item} index={index} getItems={getItems}/>
                 ))}

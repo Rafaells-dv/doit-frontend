@@ -12,8 +12,8 @@ export default function Home() {
 
   const [tasks, setTasks] = useState([]);
   const [isCreatingTask, setIsCreatingTask] = useState(false);
-
-  useEffect(() => {
+  
+  function getTasks() {
     axios.get(url+"/all", {
       headers: {
         "Content-Type": "application/json",
@@ -21,7 +21,27 @@ export default function Home() {
     }).then(response => {
       setTasks(response.data);
     })
+  }
+
+  useEffect(() => {
+    getTasks();
   }, []);
+
+  function addTask(e) {
+    e.preventDefault();
+    const form = e.target;
+    const task = {
+      title: form.title.value,
+    }
+    axios.post(url+"/newtask", task, {
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }).then(response => {
+      setTasks([...tasks, response.data]);
+      setIsCreatingTask(false);
+    })
+  }
 
   return (
     <>
@@ -48,7 +68,8 @@ export default function Home() {
                 type: "cancel", 
                 onClick: () => setIsCreatingTask(false)
               }
-            ]} 
+            ]}
+            handleSubmit={addTask} 
           />
         </div>
       }
@@ -60,7 +81,7 @@ export default function Home() {
         </div>
         <article className={styles.article}>
           {tasks.map(task => (
-            <Task key={task.id} task={task} />
+            <Task key={task.id} task={task} getTasks={getTasks}/>
           ))}
         </article>
       </main>

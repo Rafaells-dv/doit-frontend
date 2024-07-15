@@ -24,6 +24,13 @@
     border-radius: 10px;
 }
 
+.back > div > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
 .back > div > div > button {
     height: 40px;
 }

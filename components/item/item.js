@@ -62,7 +62,7 @@ export default function Item({item, getItems}) {
                 <Popup 
                     title={`Deseja excluir "${item.description}" da tarefa?`} 
                     setDeletePopup={setDeletePopup} 
-                    deleteItem={deleteItem}
+                    func={deleteItem}
                 />
             }
             <div>
