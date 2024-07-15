@@ -1,0 +1,30 @@
+.button {
+    background-color: var(--gray);
+    border: none;
+    border-radius: 10px;
+    padding: 0 1rem;
+    color: var(--white);
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.button:hover {
+    background-color: var(--baby-powder);
+    color: var(--gray);
+    border: 2px solid var(--gray);
+}
+
+.button[type="delete"] {
+    background-color: var(--red);
+}
+
+.button[type="cancel"] {
+    background-color: var(--red);
+}
+
+.button > p {
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}

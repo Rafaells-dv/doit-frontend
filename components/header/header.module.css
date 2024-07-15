@@ -1,0 +1,28 @@
+.header {
+    background-color: var(--gray);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 64px;
+}
+
+.header > h1 {
+    color: var(--baby-powder);
+}
+
+.header > nav {
+    width: 10%;
+
+}
+
+.header > nav > ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.header > nav > ul > li > a{
+    color: var(--baby-powder);
+    text-decoration: none;
+}

@@ -1,0 +1,16 @@
+.input {
+    border: 2px solid var(--gray);
+    border-radius: 10px;
+    padding: 0.6rem 0.5rem;
+    background-color: var(--baby-powder);
+    font-size: 1rem;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.input:focus {
+    border: 2px solid var(--gray);
+    outline: none;
+}

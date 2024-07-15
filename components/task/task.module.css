@@ -1,0 +1,81 @@
+.card {
+    background-color: var(--white);
+    width: fit-content;
+    height: fit-content;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.card > div:first-child {
+    padding: 15px;
+    background-color: var(--gray);
+    border-radius: 10px 10px 0 0;
+    color: var(--baby-powder);
+}
+
+.card > div:nth-child(2) {
+    padding: 10px;
+    height: fit-content;
+}
+
+.card > .buttonAdd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0;
+    margin: 0.5rem;
+    border-radius: 10px;
+}
+
+.card > .buttonAdd:last-child:hover {
+    background-color: var(--light-gray);
+    cursor: pointer;
+}
+
+.card > div > form {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.5rem 0;
+    margin: 0 20px 10px 20px;
+    border-radius: 10px;
+}
+
+.card > div > form > input {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    background-color: var(--white);
+    border: 1px solid var(--gray);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.card > div > form > button {
+    border: none;
+    background-color: var(--white);
+}
+
+.card > div > form > input:focus {
+    outline: none;
+}
+
+.card > div > form > button > img[src="/_next/static/media/plus.40266733.svg"] {
+    margin-left: 40px;
+}
+
+.card > div > form > button > img[src="/_next/static/media/plus.40266733.svg"]:hover {
+    background-color: var(--light-gray);
+    border-radius: 20%;
+    cursor: pointer;
+}
+
+.card img[src="/_next/static/media/x.3e40f2e0.svg"]:hover {
+    border: 1px solid var(--red);
+    cursor: pointer;
+    border-radius: 10px;
+}

@@ -1,0 +1,49 @@
+.form {
+    height: fit-content;
+    width: fit-content;
+    padding: 2rem 4rem;
+    background-color: var(--baby-powder);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+}
+
+.form > h1 {
+    margin: 1rem;
+    font-size: 2.5rem;
+    color: var(--gray);
+} 
+
+.fields {
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.5rem;
+    color: var(--gray);
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.buttons > button {
+    padding: 0.5rem 1rem;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+}
+

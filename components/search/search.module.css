@@ -1,0 +1,17 @@
+.search {
+    width: 70%;
+    padding: 0.7rem 0.9rem;
+    background-color: var(--baby-powder);
+    border: 2px solid var(--gray);
+    border-radius: 20px;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.search:focus {
+    outline: none;
+    border-color: var(--gray);
+    background-color: var(--white);
+}
