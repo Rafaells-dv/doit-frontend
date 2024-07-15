@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import Item from '../item/item';
 import styles from './task.module.css';
+import saveIcon from '@/assets/icons/save_w.svg';
 import plusIcon from "@/assets/icons/plus.svg";
 import xIcon from "@/assets/icons/x.svg";
 import Image from 'next/image';
@@ -16,7 +17,9 @@ export default function Task({task, getTasks}) {
     const [deletePopup, setDeletePopup] = useState(false);
     const [items, setItems] = useState([]);
     const [isAddingItem, setIsAddingItem] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
     const [form, setForm] = useState({});
+
 
     function getItems() {
         axios.get(urlItem+`/all?taskId=${task.id}`, {
@@ -37,7 +40,18 @@ export default function Task({task, getTasks}) {
     }
 
     function editTask() {
-        console.log("Edit task");
+        axios.put(urlTask+`/att/${task.id}`, JSON.stringify({
+            title: form.title
+        }), {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(() => {
+            setIsEditing(false);
+            getTasks();
+        }).catch(error => {
+            console.error("There was an error editing the task:", error);
+        });
     }
 
     function deleteTask() {
@@ -88,13 +102,39 @@ export default function Task({task, getTasks}) {
                 />
             }
             <div className={styles.head}>
-                <h2>{task.title}</h2>
+                {isEditing ? 
+                    <>
+                        <input 
+                            name="title" 
+                            type="text" 
+                            value={form.title}
+                            placeholder={task.title} 
+                            onChange={handleChange}
+                        />
+                        <Image 
+                            src={saveIcon} 
+                            alt="pen edit icon" 
+                            width={20} 
+                            height={20} 
+                            onClick={editTask} 
+                        />
+                        <Image 
+                            src={xIcon} 
+                            alt="exclude item button" 
+                            width={18} 
+                            height={18} 
+                            onClick={() => setIsEditing(false)} 
+                        />
+                    </>
+                : 
+                    <h2>{task.title}</h2>
+                }
                 <Options 
                     options={
                         [
                             {
                                 text: "Editar",
-                                onClick: editTask
+                                onClick: () => setIsEditing(true)
                             },
                             {   
                                 text: "Excluir",

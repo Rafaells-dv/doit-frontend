@@ -73,6 +73,7 @@ export default function Item({item, getItems}) {
                         value={form.description}
                         placeholder={item.description}
                         onChange={handleChange}
+                        className={styles.fadeIn}
                     />
                 :  
                     <>
@@ -104,6 +105,7 @@ export default function Item({item, getItems}) {
                             width={20} 
                             height={20} 
                             onClick={editItem} 
+                            className={styles.fadeIn}
                         />
                         <Image 
                             src={xIcon} 
@@ -111,6 +113,7 @@ export default function Item({item, getItems}) {
                             width={18} 
                             height={18} 
                             onClick={() => setIsEditing(false)} 
+                            className={styles.fadeIn}
                         />
                     </>
                 :
