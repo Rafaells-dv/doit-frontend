@@ -70,7 +70,8 @@ export default function Item({item, getItems}) {
                     <input 
                         name="description" 
                         type="text" 
-                        value={form.description || item.description} 
+                        value={form.description}
+                        placeholder={item.description}
                         onChange={handleChange}
                     />
                 :  

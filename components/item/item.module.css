@@ -98,10 +98,12 @@ outline: none;
     cursor: pointer;
     border: 2px solid var(--gray);
     border-radius: 5px;
+    transition: 0.3s;
 }
 
 .item div img:last-of-type:hover {
     cursor: pointer;
     border: 2px solid var(--red);
     border-radius: 5px;
+    transition: 0.3s;
 }

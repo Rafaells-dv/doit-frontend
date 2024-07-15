@@ -29,6 +29,7 @@
     padding: 0.5rem 0;
     margin: 0.5rem;
     border-radius: 10px;
+    transition: 0.5s;
 }
 
 .card > .buttonAdd:last-child:hover {
