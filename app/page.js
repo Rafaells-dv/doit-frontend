@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Task from "@/components/task/task";
 import styles from "./page.module.css";
 import axios from "axios";
@@ -12,7 +12,19 @@ export default function Home() {
 
   const [tasks, setTasks] = useState([]);
   const [isCreatingTask, setIsCreatingTask] = useState(false);
+  const [search, setSearch] = useState('');
   
+  const filteredTasks = useMemo(() => {
+    return search.length > 0 
+        ? tasks.filter(task => task.title.toLowerCase().includes(search.toLowerCase()))
+        : []
+  }, [tasks, search]);
+
+  function handleSearch (event) {
+    event.preventDefault();
+    setSearch(event.target.value)
+  }
+
   function getTasks() {
     axios.get(url+"/all", {
       headers: {
@@ -76,13 +88,23 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Suas tarefas</h1>
         <div>
-          <Search placeholder={'Pesquisar tarefa...'}/>
+          <Search placeholder={'Pesquisar tarefa...'} onChange={handleSearch} value={search}/>
           <Button onClick={() => setIsCreatingTask(true)}><p>Nova Tarefa</p></Button>
         </div>
         <article className={styles.article}>
-          {tasks.map(task => (
-            <Task key={task.id} task={task} getTasks={getTasks}/>
-          ))}
+          {search.length > 0 ? (
+            filteredTasks.length > 0 ? (
+              filteredTasks.map(task => (
+                <Task key={task.id} task={task} />
+              ))
+            ) : (
+              <p>Nenhuma tarefa encontrada.</p>
+            )
+          ) : (
+            tasks.map(task => (
+              <Task key={task.id} task={task} />
+            ))
+          )}
         </article>
       </main>
     </>

@@ -14,11 +14,6 @@ export default function Header() {
                             <p>Home</p>
                         </Link>
                     </li>
-                    <li>
-                        <Link href="/about">
-                            <p>About</p>
-                        </Link>
-                    </li>
                 </ul>
             </nav>        
         </header>
