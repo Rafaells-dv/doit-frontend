@@ -26,7 +26,7 @@ export default function Home() {
   }
 
   function getTasks() {
-    axios.get(url+"/all", {
+    axios.get(url, {
       headers: {
         "Content-Type": "application/json",
       }
@@ -45,7 +45,7 @@ export default function Home() {
     const task = {
       title: form.title.value,
     }
-    axios.post(url+"/newtask", task, {
+    axios.post(url, task, {
       headers: {
         "Content-Type": "application/json",
       }
@@ -95,14 +95,14 @@ export default function Home() {
           {search.length > 0 ? (
             filteredTasks.length > 0 ? (
               filteredTasks.map(task => (
-                <Task key={task.id} task={task} />
+                <Task key={task.id} task={task} getTasks={getTasks}/>
               ))
             ) : (
               <p>Nenhuma tarefa encontrada.</p>
             )
           ) : (
             tasks.map(task => (
-              <Task key={task.id} task={task} />
+              <Task key={task.id} task={task} getTasks={getTasks}/>
             ))
           )}
         </article>

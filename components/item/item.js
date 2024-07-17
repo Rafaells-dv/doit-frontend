@@ -26,7 +26,7 @@ export default function Item({item, getItems}) {
     }
 
     function editItem() {
-        axios.put(url+`/att?itemId=${item.id}`, JSON.stringify({
+        axios.put(url+`?itemId=${item.id}`, JSON.stringify({
             description: form.description
         }), {
             headers: {
@@ -42,7 +42,7 @@ export default function Item({item, getItems}) {
 
     function deleteItem() {
         console.log("Deleting item...");
-        axios.delete(url+`/delete/${item.id}`, {
+        axios.delete(url+`?itemId=${item.id}`, {
             headers: {
                 "Content-Type": "application/json",
             }

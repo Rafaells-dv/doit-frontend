@@ -20,9 +20,8 @@ export default function Task({task, getTasks}) {
     const [isEditing, setIsEditing] = useState(false);
     const [form, setForm] = useState({});
 
-
     function getItems() {
-        axios.get(urlItem+`/all?taskId=${task.id}`, {
+        axios.get(urlItem+`?taskId=${task.id}`, {
             headers: {
                 "Content-Type": "application/json",
             }
@@ -39,8 +38,9 @@ export default function Task({task, getTasks}) {
         setForm({...form, [e.target.name]: e.target.value});
     }
 
-    function editTask() {
-        axios.put(urlTask+`/att/${task.id}`, JSON.stringify({
+    function editTask(e) {
+        e.preventDefault();
+        axios.put(urlTask+`?taskId=${task.id}`, JSON.stringify({
             title: form.title
         }), {
             headers: {
@@ -56,7 +56,7 @@ export default function Task({task, getTasks}) {
 
     function deleteTask() {
         console.log("Delete task id:", task.id);
-        axios.delete(urlTask+`/delete/${task.id}`, {
+        axios.delete(urlTask+`?taskId=${task.id}`, {
             headers: {
                 "Content-Type": "application/json",
             }
@@ -73,7 +73,7 @@ export default function Task({task, getTasks}) {
     function addItem(event) {  
         event.preventDefault();
         console.log(form);
-        axios.post(urlItem+`/additem?taskId=${task.id}`, JSON.stringify({
+        axios.post(urlItem+`?taskId=${task.id}`, JSON.stringify({
             description: form.description
         }), {
             headers: {
@@ -103,7 +103,7 @@ export default function Task({task, getTasks}) {
             }
             <div className={styles.head}>
                 {isEditing ? 
-                    <>
+                    <form onSubmit={editTask}>
                         <input 
                             name="title" 
                             type="text" 
@@ -111,13 +111,15 @@ export default function Task({task, getTasks}) {
                             placeholder={task.title} 
                             onChange={handleChange}
                         />
-                        <Image 
-                            src={saveIcon} 
-                            alt="pen edit icon" 
-                            width={20} 
-                            height={20} 
-                            onClick={editTask} 
-                        />
+                        <button type="submit">
+                            <Image 
+                                src={saveIcon} 
+                                alt="pen edit icon" 
+                                width={20} 
+                                height={20} 
+                                onClick={editTask} 
+                            />
+                        </button>
                         <Image 
                             src={xIcon} 
                             alt="exclude item button" 
@@ -125,7 +127,7 @@ export default function Task({task, getTasks}) {
                             height={18} 
                             onClick={() => setIsEditing(false)} 
                         />
-                    </>
+                    </form>
                 : 
                     <h2>{task.title}</h2>
                 }
@@ -149,20 +151,19 @@ export default function Task({task, getTasks}) {
                     <Item key={item.id} item={item} index={index} getItems={getItems}/>
                 ))}
             </div>
-            {isAddingItem ? 
-                <div>
-                    <form onSubmit={addItem}>
-                        <Image src={xIcon} alt="exclude item button" width={18} height={18} onClick={cancelAdd} />
-                        <input type="text" name="description" placeholder="Novo item"  onChange={handleChange}/>
-                        <button type="submit"><Image src={plusIcon} alt="confirm plus icon" width={20} height={20}  /></button>
-                    </form>
-                </div>
-            :
-                <div className={styles.buttonAdd} onClick={() => (setIsAddingItem(true))} >
-                    <Image src={plusIcon} alt="plus icon" width={20} height={20}  />
-                </div>
-            }
-            
+        {isAddingItem ? 
+            <div className={styles.formAdd}>
+                <form onSubmit={addItem}>
+                    <Image src={xIcon} alt="exclude item button" width={18} height={18} onClick={cancelAdd} />
+                    <input type="text" name="description" placeholder="Novo item"  onChange={handleChange}/>
+                    <button type="submit"><Image src={plusIcon} alt="confirm plus icon" width={20} height={20}  /></button>
+                </form>
+            </div>
+        :
+            <div className={styles.buttonAdd} onClick={() => (setIsAddingItem(true))} >
+                <Image src={plusIcon} alt="plus icon" width={20} height={20}  />
+            </div>
+        }
         </div>
     );
 } 
