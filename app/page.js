@@ -6,6 +6,7 @@ import axios from "axios";
 import Search from "@/components/search/search";
 import Button from "@/components/button/button";
 import Form from "@/components/form/form";
+import { toast } from "react-toastify";
 
 export default function Home() {
   const url = "http://localhost:8080/tasks";
@@ -50,9 +51,12 @@ export default function Home() {
         "Content-Type": "application/json",
       }
     }).then(response => {
-      setTasks([...tasks, response.data]);
-      setIsCreatingTask(false);
-    })
+        setTasks([...tasks, response.data]);
+        setIsCreatingTask(false);
+        toast.success("Tarefa criada com sucesso!");
+    }).catch(error => {
+        toast.error(error.response.data.message);
+    });
   }
 
   return (
@@ -73,7 +77,7 @@ export default function Home() {
               {
                 text: "Criar",
                 type: "submit", 
-                onClick: false
+                onClick: () => {}
               },
               {
                 text: "Cancelar",

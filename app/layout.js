@@ -1,10 +1,8 @@
+'use client';
 import "./global.css";
 import Header from "@/components/header/header";
-
-export const metadata = {
-  title: "Doit",
-  description: "Doit is a simple ToDo app built with Java and Next.js",
-};
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RootLayout({ children }) {
   return (
@@ -15,9 +13,11 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap" rel="stylesheet" />  
       </head>
       <body>
+        <ToastContainer />
         <Header />
         {children}
       </body>
+      
     </html>
   );
 }

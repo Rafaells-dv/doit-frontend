@@ -15,14 +15,14 @@ export default function Form({title, handleSubmit, fields, buttons}) {
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
             <h1>{title}</h1>
-            {fields.map(field => {
+            {fields.map((field, index) => {
                 return (
-                    <div className={styles.fields}>
+                    <div className={styles.fields} key={index}>
                         <label>{field.label}</label>
                         <Input 
                             type={field.type} 
                             name={field.name} 
-                            value={form[field.name]} 
+                            value={form[field.name] || ''} 
                             onChange={handleChange} 
                             required={field.required}
                         />
@@ -30,9 +30,9 @@ export default function Form({title, handleSubmit, fields, buttons}) {
                 )
             })}
             <div className={styles.buttons}>
-                {buttons.map(button => {
+                {buttons.map((button, index) => {
                     return (
-                        <Button type={button.type} onClick={button.onClick}>{button.text}</Button>
+                        <Button key={index} type={button.type} onClick={button.onClick}>{button.text}</Button>
                     )
                 })}
             </div>

@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import Item from '../item/item';
 import styles from './task.module.css';
 import saveIcon from '@/assets/icons/save_w.svg';
@@ -49,30 +50,28 @@ export default function Task({task, getTasks}) {
         }).then(() => {
             setIsEditing(false);
             getTasks();
+            toast.success("Tarefa editada com sucesso!");
         }).catch(error => {
-            console.error("There was an error editing the task:", error);
+            toast.error(error.response.data.message);
         });
     }
 
     function deleteTask() {
-        console.log("Delete task id:", task.id);
         axios.delete(urlTask+`?taskId=${task.id}`, {
             headers: {
                 "Content-Type": "application/json",
             }
         }).then(() => {
-            console.log("Task deleted");
             setDeletePopup(false);
-            getTasks(); // Chama getTasks após a conclusão bem-sucedida da requisição DELETE
+            getTasks();
+            toast.success("Tarefa excluída com sucesso!");
         }).catch(error => {
-            console.error("There was an error deleting the task:", error);
-            // Tratar erro aqui, se necessário
+            toast.error("Ops! Ocorreu um erro ao excluir a tarefa.");
         })
     }
 
     function addItem(event) {  
         event.preventDefault();
-        console.log(form);
         axios.post(urlItem+`?taskId=${task.id}`, JSON.stringify({
             description: form.description
         }), {
@@ -80,11 +79,11 @@ export default function Task({task, getTasks}) {
                 "Content-Type": "application/json",
             }
         }).then(() => {
-            setIsAddingItem(false);
-            getItems(); // Chama getItems após a conclusão bem-sucedida da requisição POST
+                setIsAddingItem(false);
+                getItems();
+                toast.success("Item adicionado com sucesso!");
         }).catch(error => {
-            console.error("There was an error adding the item:", error);
-            // Tratar erro aqui, se necessário
+            toast.error(error.response.data.message);
         });
     }
 
@@ -107,7 +106,7 @@ export default function Task({task, getTasks}) {
                         <input 
                             name="title" 
                             type="text" 
-                            value={form.title}
+                            value={form.title || ''}
                             placeholder={task.title} 
                             onChange={handleChange}
                         />

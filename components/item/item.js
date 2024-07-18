@@ -6,6 +6,7 @@ import editIcon from '@/assets/icons/edit.svg';
 import saveIcon from '@/assets/icons/save.svg';
 import xIcon from '@/assets/icons/x.svg';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import Popup from '../popup/popup';
 import axios from 'axios';
 
@@ -35,20 +36,22 @@ export default function Item({item, getItems}) {
         }).then(() => {
             setIsEditing(false);
             getItems();
+            toast.success("Item editado com sucesso!");
         }).catch(error => {
-            console.error("There was an error editing the item:", error);
+            toast.error(error.response.data.message);
         });
     }
 
     function deleteItem() {
-        console.log("Deleting item...");
         axios.delete(url+`?itemId=${item.id}`, {
             headers: {
                 "Content-Type": "application/json",
             }
-        }).then(response => {
-            console.log(response) 
+        }).then(() => {
             getItems()
+            toast.success("Item excluído com sucesso!");
+        }).catch(error => {
+            toast.error(error.response.data.message);
         })
     }
 
@@ -70,7 +73,7 @@ export default function Item({item, getItems}) {
                     <input 
                         name="description" 
                         type="text" 
-                        value={form.description}
+                        value={form.description || ''}
                         placeholder={item.description}
                         onChange={handleChange}
                         className={styles.fadeIn}
